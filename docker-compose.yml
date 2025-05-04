@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  user-service:
+    build:
+      context: ./  # Pointing to the correct directory
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/userdb
+      - PORT=3000
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
