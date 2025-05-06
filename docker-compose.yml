@@ -8,6 +8,7 @@ services:
     environment:
       - MONGO_URI=mongodb://mongo:27017/userdb
       - PORT=3000
+      - JWT_SECRET="B7dx9M#p2s%Lq8j5ZGc!K3vF6tY4wRnE"
     depends_on:
       - mongo
 
