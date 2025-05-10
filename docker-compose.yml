@@ -6,18 +6,29 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - MONGO_URI=mongodb://mongo:27017/userdb
+      - MONGO_URI=mongodb://user-mongo:27017/userdb
       - PORT=3000
-      - JWT_SECRET="B7dx9M#p2s%Lq8j5ZGc!K3vF6tY4wRnE"
+      - JWT_SECRET=B7dx9M#p2s%Lq8j5ZGc!K3vF6tY4wRnE
+      # Important: use service names, not container names
+      - MOVIE_SERVICE_URL=http://movie-service:3001
+      - REVIEW_SERVICE_URL=http://review-service:3003
+      - WATCH_SERVICE_URL=http://watch-service:3004
     depends_on:
-      - mongo
+      - user-mongo
+    networks:
+      - app-network
 
-  mongo:
+  user-mongo:
     image: mongo
     ports:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
+    networks:
+      - app-network
 
 volumes:
   mongo-data:
+networks:
+  app-network:
+    external: true
